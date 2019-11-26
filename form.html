@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Comment Form</title>
+  </head>
+  <body>
+    <form id="CommentForm">
+      Name:<br />
+      <input type="text" id="idname" placeholder="Enter Name" /> <br />
+      Message:<br />
+      <textarea
+        rows="10"
+        cols="20"
+        id="idmessage"
+        placeholder="Enter text here"
+      ></textarea><br>
+      <input type="submit" id="commentBtn" />
+    </form>
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-analytics.js"></script>
+
+    <script>
+      // Your web app's Firebase configuration
+      var firebaseConfig = {
+        apiKey: "AIzaSyBRzTXZmhGAHCEVU6Qc9kwtZrjLhOLOJLA",
+        authDomain: "chayanpx-1b0de.firebaseapp.com",
+        databaseURL: "https://chayanpx-1b0de.firebaseio.com",
+        projectId: "chayanpx-1b0de",
+        storageBucket: "chayanpx-1b0de.appspot.com",
+        messagingSenderId: "933408904693",
+        appId: "1:933408904693:web:b342b9ee7cde1826acfcbc",
+        measurementId: "G-59Z742ZGE9"
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      firebase.analytics();
+      let myFirebase = firebase.database();
+      let dataRef = myFirebase.ref("/guestbook");
+      document.getElementById("commentBtn").onclick = function() {
+        let lname = document.getElementById("idname").value;
+        let lmessage = document.getElementById("idmessage").value;
+        dataRef.push({
+          name: lname,
+          message: lmessage,
+        });
+      };
+    </script>
+  </body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>CHATCHATCHAT</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link href="https://fonts.googleapis.com/css?family=Kanit|Roboto&display=swap" rel="stylesheet">
+  </head>
+  <body style="background-color: #324376">
+    <br>
+    <h1 class="text-center m-5" style="font-family: 'Kanit', sans-serif; color: #F5DD90">
+            CHITCHAT BADABING BADABOONG
+          </h1>
+          <div class="container mt-5">
+            <table class="table table-hover" style="color: #fffff0">
+              <thead>
+                <tr>
+                  <th class="text-center m-5" style="font-family: 'Roboto', sans-serif;">USERNAME</th>
+                  <th class="text-center m-5" style="font-family: 'Roboto', sans-serif;">MESSAGE</th>
+                </tr>
+              </thead>
+              <tbody id="dataRow" class="text-center m-5"></tbody>
+            </table>
+            <form id="CommentForm">
+              <div class="row">
+                <div class="col">
+                  <input
+                    type="text"
+                    id="idname"
+                    class="form-control"
+                    placeholder="who are you"
+                  />
+                </div>
+                <div class="col">
+                  <input
+                    type="text"
+                    id="idmessage"
+                    class="form-control"
+                    placeholder="type something what you want to send"
+                  />
+                </div>
+                <div class="col">
+                  <button
+                    type="submit"
+                    class="btn btn-dark btn-block"
+                    style="color: #fffff0"
+                    id="commentBtn"
+                  >
+                    SEND !!!
+                  </button>
+                </div>
+              </div>
+            </form>
+            <div class="row text-right">
+                    <div class="col">
+                        <br>
+                        <br>
+                        <audio autoplay loop controls name="media">
+                          <source src="https://www.redringtones.com/wp-content/uploads/2017/02/minions-banana-song.mp3" type="audio/mpeg">
+                          </audio>
+                    </div>
+                </div>
+          </div>
+          
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-analytics.js"></script>
+
+    <script>
+      // Your web app's Firebase configuration
+      var firebaseConfig = {
+        apiKey: "AIzaSyBRzTXZmhGAHCEVU6Qc9kwtZrjLhOLOJLA",
+        authDomain: "chayanpx-1b0de.firebaseapp.com",
+        databaseURL: "https://chayanpx-1b0de.firebaseio.com",
+        projectId: "chayanpx-1b0de",
+        storageBucket: "chayanpx-1b0de.appspot.com",
+        messagingSenderId: "933408904693",
+        appId: "1:933408904693:web:b342b9ee7cde1826acfcbc",
+        measurementId: "G-59Z742ZGE9"
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      firebase.analytics();
+      let myFirebase = firebase.database();
+      let dataRef = myFirebase.ref("/guestbook");
+      document.getElementById("commentBtn").onclick = function() {
+        let lname = document.getElementById("idname").value;
+        let lmessage = document.getElementById("idmessage").value;
+        dataRef.push({
+          name: lname,
+          message: lmessage,
+        });
+      };
+      dataRef.limitToLast(5).on("child_added", function(childSnapshot) {
+              let item = childSnapshot.val();
+              document.getElementById('dataRow').innerHTML += 
+              "<tr><td>" + item.name + "</td><td>" + item.message + "</td>";
+      });
+    </script>
+</body>
+</html>
